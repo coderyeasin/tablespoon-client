@@ -6,18 +6,20 @@ import './AllProducts.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import useAuth from '../../../hooks/useAuth';
+import { useSelector } from 'react-redux';
 
 const AllProducts = () => {
     document.title = 'Products';
-    const { products, allProducts, getStarting } = useAuth();
+    const { products, displayProducts, setDisplayProducts, getStarting, allProducts} = useAuth();
     const [checkButton, setCheckButton] = useState([]);
     const [rangePrice, setRangePrice] = useState(0);
     
+    // const allProducts = useSelector(state => state.items.allItems)
 
     const handleSearch = event => {
         const searchText = event.target.value;
         const matchedProducts = products.filter(product => product.title.toLowerCase().includes(searchText.toLowerCase()));
-        allProducts(matchedProducts);
+        setDisplayProducts(matchedProducts);
     }
 
     // ---------------------------------------------------------------------------
@@ -30,27 +32,27 @@ const AllProducts = () => {
     // color filter
     const handleBlueColor = () => {
         const newProduct = products?.filter(product => product.color === 'blue');
-        allProducts(newProduct);
+        setDisplayProducts(newProduct);
         setCheckButton('blue');
     }
     const handleRedColor = () => {
         const newProduct = products?.filter(product => product.color === 'red');
-        allProducts(newProduct);
+        setDisplayProducts(newProduct);
         setCheckButton('red');
     }
     const handleGreenColor = () => {
         const newProduct = products?.filter(product => product.color === 'green');
-        allProducts(newProduct);
+        setDisplayProducts(newProduct);
         setCheckButton('green');
     }
     const handleBlackColor = () => {
         const newProduct = products?.filter(product => product.color === 'black');
-        allProducts(newProduct);
+        setDisplayProducts(newProduct);
         setCheckButton('black');
     }
     const handleOrangeColor = () => {
         const newProduct = products?.filter(product => product.color === 'orange');
-        allProducts(newProduct);
+        setDisplayProducts(newProduct);
         setCheckButton('orange');
     }
 
@@ -59,22 +61,22 @@ const AllProducts = () => {
     const handleRangePrice = e => {
         setRangePrice(e.target.value)
         const newProduct = products?.filter(product => product.price <= e.target.value );
-        allProducts(newProduct);
+        setDisplayProducts(newProduct);
     }
 
     const handleClearFilter = () => {
-        allProducts([...products]);
+        setDisplayProducts([...products]);
     }
 
     // ----------------------------------------------------------------
     const handleSort = e => {
         if(e.target.value ===  'low'){
             products.sort((a, b) => a.price - b.price);
-            allProducts([...products]);
+            setDisplayProducts([...products]);
         }
         if(e.target.value ===  'high'){
             products.sort((a, b) => b.price - a.price);
-            allProducts([...products]);
+            setDisplayProducts([...products]);
         }
 
         if(e.target.value ===  'a'){
@@ -85,7 +87,7 @@ const AllProducts = () => {
                     return -1;
                 return 0;
             });
-            allProducts([...products]);
+            setDisplayProducts([...products]);
         }
         
         if(e.target.value ===  'z'){
@@ -96,7 +98,7 @@ const AllProducts = () => {
                     return 1;
                 return 0;
             });
-            allProducts([...products]);
+            setDisplayProducts([...products]);
         }
     }
 

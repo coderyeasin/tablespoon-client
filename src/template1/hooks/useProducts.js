@@ -68,14 +68,19 @@ const useProducts = () =>{
     //             setDisplayProducts(data)
     //         })
     // }, []);
-    
-    const dispatch = useDispatch()
 
+
+
+    ///////////////Redux-data load
+
+    const dispatch = useDispatch()
     useEffect(() => {
        dispatch(tableSpoonItems())
     }, []);
-
-    const allProducts = useSelector(item => item.items.allItems)
+    // const allProducts = useSelector(item => item.items.allItems)
+    const allProducts = useSelector(state => state.items.allItems)
+    const addProduct = useSelector(state => state.items.addedItem)
+    const removeProduct = useSelector(state => state.items.removeItem)
 
     // cart quantity
     useEffect(() => {
@@ -103,6 +108,7 @@ const useProducts = () =>{
     const handleAddToCart = (product) => {
         const newCart = [...cart];
         const existing = cart.find(c => c._id === product._id);
+        
         if(existing){
             product.quantity = product.quantity + 1;
         }
@@ -110,6 +116,7 @@ const useProducts = () =>{
             product.quantity = 1;
             newCart.push(product);
         }
+
         setCart(newCart);
         addToDb(product._id);
 
@@ -144,7 +151,7 @@ const useProducts = () =>{
 
 
     return {
-        allProducts,
+        allProducts,addProduct,removeProduct,
         products,
         setProducts,
         displayProducts,

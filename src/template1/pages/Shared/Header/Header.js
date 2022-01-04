@@ -5,17 +5,28 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShoppingCart, faUserPlus, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import useAuth from '../../../hooks/useAuth';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 
 const Header = () => {
-    const {cart, user, logOut} = useAuth();
+    const {cart, user,  logOut} = useAuth();
 
     const getStarting = JSON.parse(localStorage.getItem('starting'));
     const logo_png = "https://i.ibb.co/NnNgZVT/download.png";
 
+    const addProduct = useSelector(state => state.items.addedItem)
+    const sum = addProduct.filter(e => e.price).map(e => e.price).reduce((prev, curr) => prev + curr, 0)
+
+    console.log(sum);
+
+
 //    const cartLength = cart.reduce((previous, product) => previous + product.quantity, 0)
 //    const cartPrice = cart.reduce((previous, product) => previous + product.sell_price, 0)
 
+
+    
+    
    let cartLength = 0;
    let cartPrice = 0;
    for(const product of cart){
@@ -41,7 +52,16 @@ const Header = () => {
                             <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
                         </Navbar.Collapse>
                         <Navbar.Collapse className="justify-content-end">
-                            <Nav.Link as={Link} to="/cart">Cart<FontAwesomeIcon icon={faShoppingCart}/>{cartLength ? <span><sup style={{color: 'red'}}>{cartLength}</sup>${cartPrice.toPrecision(5)}</span> : ''}</Nav.Link>
+                        <Nav.Link as={Link} to="/cart">Cart<FontAwesomeIcon icon={faShoppingCart} />
+                            
+                            {sum ? <span><sup className='mx-1' style={{ color: 'red' }}>
+                                {addProduct.filter(e => e.price).map(e => e.price).length}</sup>
+                                {sum}
+                                
+                            {/* {cartLength ? <span><sup className='mx-2' style={{ color: 'red' }}>{cartLength}</sup>
+                            ${cartPrice.toPrecision(5)} */}
+                        
+                        </span> : ''}</Nav.Link>
                             {
                                 user?.email || user?.displayName ?
                                 <Nav.Link as={Link} to="/login"><button onClick={logOut} style={{border: 'none', backgroundColor: 'transparent', color: '#617d98'}}>Logout <FontAwesomeIcon icon={faSignOutAlt}/></button></Nav.Link>

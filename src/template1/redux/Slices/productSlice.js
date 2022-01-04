@@ -17,7 +17,7 @@ const initialState = {
 }
 
 export const productSlice = createSlice({
-  name: 'foods',
+  name: 'interior',
   initialState,
   reducers: {
       allProducts: (state, action) => {
@@ -26,8 +26,9 @@ export const productSlice = createSlice({
       addProduct: (state, {payload}) => {
           state.addedItem.push(payload)
     },
-    removeProduct: (state, {payload}) => {
-      state.removeItem.filter(item => item.id !== payload)
+      removeProduct: (state, { payload }) => {
+          const a = state.addedItem.map(e => e.name);
+          console.log(a);
     },
     },
     extraReducers: (builder) => {

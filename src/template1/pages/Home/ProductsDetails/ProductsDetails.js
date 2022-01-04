@@ -11,7 +11,7 @@ const ProductsDetails = () => {
     const { allProducts } = useAuth();
     
 
-    // const getStarting = JSON.parse(localStorage.getItem('starting'));
+    const getStarting = JSON.parse(localStorage.getItem('starting'));
 
     return (
         <Container>
