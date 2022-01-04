@@ -3,14 +3,14 @@ import { Container } from 'react-bootstrap';
 import './Checkout.css';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../hooks/useAuth';
+import { Link } from 'react-router-dom';
 
 const Checkout = () => {
-    const {cart, user} = useAuth();
+    const {cart, user , allProductPrice} = useAuth();
     const { register, handleSubmit } = useForm();
     const onSubmit = data => {
         data.price = totalPrice; 
     };
-
    let cartPrice = 0;
    for(const product of cart){
        if(!product.quantity){
@@ -19,7 +19,7 @@ const Checkout = () => {
        cartPrice =  cartPrice + product.price * product.quantity;
    }
    const price =  parseFloat(cartPrice).toFixed(2);;
-   const totalPrice = parseInt(price) + 50.34
+   const totalPrice = allProductPrice + 50.34
     return (
         <>
             <div className="checkout-details-banner">
@@ -36,11 +36,14 @@ const Checkout = () => {
                             <hr />
                             {/* <form onSubmit={handleSubmit(onSubmit)}> */}
                                 <input defaultValue={user.displayName} {...register("name")} />
-                                <input defaultValue={user.email} {...register("email")} />
+                                <input placeholder="email" {...register("email")} />
                                 <input placeholder="Number" {...register("phone")} />
                                 <input placeholder="Address" {...register("address")} />
                                 <input placeholder="Order notes (Optional)" {...register("others")} />
+                                <Link to="/dashboard/payment">
                                 <input type="submit" value="PLACE ORDER"/>
+                                </Link>
+                                    
                             {/* </form> */}
                         </div>
                         <div className="checkout-payment-right">

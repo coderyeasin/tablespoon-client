@@ -20,6 +20,7 @@ import Orders from "../pages/Dashboard/Orders/Orders";
 import AccountDetails from "../pages/Dashboard/AccountDetails/AccountDetails";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
 import Logout from "../pages/Dashboard/Logout/Logout";
+import Payment from "../pages/payment/Payment";
 
 const Template = () => {
     return (
@@ -34,7 +35,8 @@ const Template = () => {
                 <Route path="/dashboard" element={<Dashboard />}>
                   <Route path="/dashboard" element={<DashboardHome/>}></Route>
                   <Route path="/dashboard/orders" element={<Orders/>}></Route>
-                  <Route path="/dashboard/account" element={<AccountDetails/>}></Route>
+                  <Route path="/dashboard/account" element={<PrivateRoute><AccountDetails/></PrivateRoute>}></Route>
+                  <Route path="/dashboard/payment" element={<PrivateRoute><Payment/></PrivateRoute>}></Route>
                   <Route path="/dashboard/logout" element={<Logout/>}></Route>
                 </Route>
                 <Route path="/products" element={<AllProducts />}></Route>
