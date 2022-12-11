@@ -7,7 +7,7 @@ import './Products.css';
 const Products = () => {
     const [products, setProducts] = useState([]);
     useEffect(() => {
-        fetch('https://stark-basin-43355.herokuapp.com/products')
+        fetch('https://tablespone-team26-server-production.up.railway.app/products')
             .then(res => res.json())
             .then(data => setProducts(data))
     }, []);
